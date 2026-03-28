@@ -25,7 +25,7 @@ Antes de escrever o container runtime, prepare o ambiente e estude os conceitos 
   - Estrutura sugerida: `cmd/`, `pkg/`, `internal/`, `examples/`
   - Configurar `.gitignore`, `Makefile`, `README.md`
 
-- [ ] **#002 — Estudar conceitos fundamentais de containers**
+- [x] **#002 — Estudar conceitos fundamentais de containers**
   - Entender que containers NÃO são VMs
   - Ler sobre: namespaces, cgroups, chroot, union filesystems
   - Recurso: `man namespaces`, `man cgroups`, artigo "Containers from Scratch" (Liz Rice)
