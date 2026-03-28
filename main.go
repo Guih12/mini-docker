@@ -7,6 +7,9 @@ import (
 	"syscall"
 )
 
+// a principal ideia aqui é, que processo pai executa, cria os namespaces e lança
+// o binario como seu filho e o filho ja roda dentro dos namespaces, e faz todas as configuracoes
+// como mudar o hostname, mountar o proc que é a arvore de processos daquele container e executa um shell
 func main() {
 	cmd := exec.Command("/proc/self/exe", "child")
 
