@@ -12,6 +12,7 @@ const (
 	PROC_PATH          = "/proc"
 	PROC_SELF_EXEC     = "/proc/self/exe"
 	CONTAINER_HOSTNAME = "my-container"
+	BASH_COMMAND       = "/bin/sh"
 )
 
 // a principal ideia aqui é, que processo pai executa, cria os namespaces e lança
@@ -29,6 +30,33 @@ func bindMount(source string) {
 	}
 
 	if err := syscall.Mount(source, source, "", syscall.MS_BIND, ""); err != nil {
+		fmt.Println("error", err)
+	}
+}
+
+func systemMount() {
+	if err := syscall.Unmount("old-root", syscall.MNT_DETACH); err != nil {
+		fmt.Println("error unmount", err)
+	}
+
+	if err := syscall.Mount("proc", "/proc", "proc", 0, ""); err != nil {
+		fmt.Println("erro mount:", err)
+	}
+
+	// monta a ponte entre as informacoes do dispositivo físico
+	if err := syscall.Mount("sysfs", "/sys", "sysfs", 0, ""); err != nil {
+		fmt.Println("erro mount", err)
+	}
+
+	if err := syscall.Mount("devtmpfs", "/dev", "devtmpfs", 0, ""); err != nil {
+		fmt.Println("erro mount", err)
+	}
+
+	if err := syscall.Mount("devpts", "/dev/pts", "devpts", 0, ""); err != nil {
+		fmt.Println("error", err)
+	}
+
+	if err := syscall.Mount("tmpfs", "/tmp", "tmpfs", 0, ""); err != nil {
 		fmt.Println("error", err)
 	}
 }
@@ -52,15 +80,10 @@ func main() {
 		changeChroot(LINUX_ALPINE_PATH, "/tmp/alpine/old-root")
 
 		syscall.Chdir("/")
-		if err := syscall.Unmount("old-root", syscall.MNT_DETACH); err != nil {
-			fmt.Println("error unmount", err)
-		}
 
-		if err := syscall.Mount("proc", "/proc", "proc", 0, ""); err != nil {
-			fmt.Println("erro mount:", err)
-		}
+		systemMount()
 
-		sh := exec.Command("/bin/sh")
+		sh := exec.Command(BASH_COMMAND)
 		sh.Stdin = os.Stdin
 		sh.Stdout = os.Stdout
 		sh.Stderr = os.Stderr

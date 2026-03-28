@@ -96,7 +96,7 @@ O container precisa de um filesystem root isolado.
   - Criar um mount point, chamar `syscall.PivotRoot()`, desmontar o antigo root
   - Lidar com o requisito de que new_root deve ser um mount point
 
-- [ ] **#014 — Montar filesystems essenciais**
+- [X] **#014 — Montar filesystems essenciais**
   - Montar `/proc` (procfs)
   - Montar `/sys` (sysfs)
   - Montar `/dev` (devtmpfs ou criar device nodes manualmente)
