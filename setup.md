@@ -46,27 +46,27 @@ Antes de escrever o container runtime, prepare o ambiente e estude os conceitos 
 
 O coração de um container é o isolamento de processos via namespaces.
 
-- [ ] **#005 — Implementar UTS namespace (hostname)**
+- [X] **#005 — Implementar UTS namespace (hostname)**
   - Usar `CLONE_NEWUTS` no `SysProcAttr`
   - O processo filho deve ter seu próprio hostname
   - Testar: dentro do container, `hostname` deve ser diferente do host
 
-- [ ] **#006 — Implementar PID namespace**
+- [X] **#006 — Implementar PID namespace**
   - Usar `CLONE_NEWPID`
   - O processo dentro do container deve se ver como PID 1
   - Montar `/proc` dentro do container para que `ps` funcione
 
-- [ ] **#007 — Implementar Mount namespace**
+- [X] **#007 — Implementar Mount namespace**
   - Usar `CLONE_NEWNS`
   - O container deve ter sua própria árvore de mounts
   - Implementar `mount("proc", "/proc", "proc", 0, "")` dentro do namespace
 
-- [ ] **#008 — Implementar Network namespace (básico)**
+- [X] **#008 — Implementar Network namespace (básico)**
   - Usar `CLONE_NEWNET`
   - Nesta fase, o container fica sem rede (isolado)
   - Verificar com `ip link` dentro do container
 
-- [ ] **#009 — Implementar IPC namespace**
+- [X] **#009 — Implementar IPC namespace**
   - Usar `CLONE_NEWIPC`
   - Isolar filas de mensagens e memória compartilhada
 
@@ -75,7 +75,7 @@ O coração de um container é o isolamento de processos via namespaces.
   - Mapear UID/GID para rodar containers sem root
   - Configurar `/proc/PID/uid_map` e `/proc/PID/gid_map`
 
-- [ ] **#011 — Técnica /proc/self/exe**
+- [X] **#011 — Técnica /proc/self/exe**
   - Implementar o padrão de re-invocar o próprio binário
   - O binário detecta via `os.Args` se é o processo "pai" ou "filho"
   - Isso permite configurar namespaces antes de exec
@@ -86,12 +86,12 @@ O coração de um container é o isolamento de processos via namespaces.
 
 O container precisa de um filesystem root isolado.
 
-- [ ] **#012 — Implementar chroot básico**
+- [X] **#012 — Implementar chroot básico**
   - Baixar um rootfs mínimo (Alpine mini rootfs tar.gz)
   - Extrair em um diretório e fazer `syscall.Chroot()`
   - Testar: `ls /` dentro do container deve mostrar o rootfs isolado
 
-- [ ] **#013 — Migrar de chroot para pivot_root**
+- [X] **#013 — Migrar de chroot para pivot_root**
   - `pivot_root` é mais seguro que `chroot`
   - Criar um mount point, chamar `syscall.PivotRoot()`, desmontar o antigo root
   - Lidar com o requisito de que new_root deve ser um mount point
