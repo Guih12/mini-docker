@@ -20,7 +20,7 @@ Marque com `[x]` conforme for completando:
 
 Antes de escrever o container runtime, prepare o ambiente e estude os conceitos base.
 
-- [ ] **#001 — Inicializar repositório Go**
+- [x] **#001 — Inicializar repositório Go**
   - Criar o repo com `go mod init github.com/seuuser/mini-docker`
   - Estrutura sugerida: `cmd/`, `pkg/`, `internal/`, `examples/`
   - Configurar `.gitignore`, `Makefile`, `README.md`
